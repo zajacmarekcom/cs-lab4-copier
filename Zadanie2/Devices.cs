@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Zadanie1
+namespace Zadanie2
 {
     public interface IDevice
     {
@@ -56,7 +56,6 @@ namespace Zadanie1
 
     public interface IFax : IDevice
     {
-
+        void Send(in IDocument document);
     }
-
 }

@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Zadanie1
+namespace Zadanie2
 {
-    public class Copier : BaseDevice, IPrinter, IScanner
+    public class MultifunctionalDevice : BaseDevice, IPrinter, IScanner, IFax
     {
         public int PrintCounter { get; private set; }
         public int ScanCounter { get; private set; }
+        public int FaxCounter { get; private set; }
 
         public void Print(in IDocument document)
         {
@@ -38,6 +34,22 @@ namespace Zadanie1
 
             Scan(out document, IDocument.FormatType.JPG);
             Print(document);
+        }
+
+        public void Send(in IDocument document)
+        {
+            if (GetState() == IDevice.State.off)
+                return;
+            FaxCounter++;
+            Console.WriteLine($"{DateTime.Now.ToString("0:G")} Sent by fax: {document.GetFileName()}");
+        }
+
+        public void ScanAndFax()
+        {
+            IDocument document;
+
+            Scan(out document, IDocument.FormatType.JPG);
+            Send(document);
         }
     }
 }
